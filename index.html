@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clivia Design Studio — Bridesmaid Box Survey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rose: #b08898;
+    --rose-light: #f5eef2;
+    --rose-mid: #d4b0c0;
+    --rose-dark: #8a5a6e;
+    --ink: #2c1f27;
+    --muted: #9a8890;
+    --border: rgba(176, 136, 152, 0.25);
+    --border-hover: rgba(176, 136, 152, 0.6);
+    --bg: #fdfbfc;
+    --white: #ffffff;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Jost', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    text-align: center;
+    padding: 5rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(176,136,152,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .brand-mark {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 1.5rem;
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(38px, 6vw, 60px);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+  }
+  .hero-title em { font-style: italic; color: var(--rose-dark); }
+  .hero-sub {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 480px;
+    margin: 0 auto 1rem;
+    letter-spacing: 0.02em;
+  }
+  .hero-incentive {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--rose-dark);
+    background: var(--rose-light);
+    border: 0.5px solid var(--border-hover);
+    border-radius: 50px;
+    padding: 6px 18px;
+    margin-top: 0.5rem;
+  }
+
+  /* ── Progress ── */
+  .progress-wrap {
+    max-width: 680px;
+    margin: 0 auto 0;
+    padding: 0 2rem;
+  }
+  .progress-bar {
+    height: 1.5px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--rose-mid), var(--rose));
+    border-radius: 2px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+  .progress-text { display: none; }
+
+  /* ── Form container ── */
+  .form-wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2rem 2rem 5rem;
+  }
+
+  /* ── Section ── */
+  .section { margin-bottom: 3.5rem; }
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 0.6rem;
+  }
+  .section-q {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+  .section-hint {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  /* ── Item cards ── */
+  .items-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  @media (max-width: 520px) {
+    .items-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  .option-group + .option-group { margin-top: 1.75rem; }
+  .option-group-title {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rose-dark);
+    margin: 0 0 0.9rem;
+  }
+
+
+  .item-card {
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 14px 14px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    background: var(--white);
+    position: relative;
+  }
+  .item-card:hover {
+    border-color: var(--rose-mid);
+    transform: translateY(-2px);
+  }
+  .item-card.selected {
+    border-color: var(--rose);
+    background: var(--rose-light);
+  }
+  .item-card.selected .check-badge { opacity: 1; transform: scale(1); }
+
+  .check-badge {
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--rose);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .check-badge svg { width: 10px; height: 10px; }
+
+  .item-img-wrap {
+    width: 72px; height: 72px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f8f2f5;
+    flex-shrink: 0;
+  }
+  .item-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    mix-blend-mode: multiply;
+    transition: transform 0.3s;
+  }
+  .item-card:hover .item-img-wrap img { transform: scale(1.05); }
+
+  .item-name {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .item-sub {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--muted);
+    margin-top: 1px;
+  }
+
+  /* ── Divider ── */
+  .divider {
+    width: 40px; height: 1px;
+    background: var(--rose-mid);
+    margin: 0 0 3rem;
+  }
+
+  /* ── Price pills ── */
+  .price-options { display: flex; flex-wrap: wrap; gap: 8px; }
+  .price-pill {
+    border: 0.5px solid var(--border);
+    border-radius: 50px;
+    padding: 9px 20px;
+    font-size: 13px;
+    font-weight: 300;
+    cursor: pointer;
+    color: var(--muted);
+    background: var(--white);
+    transition: all 0.18s;
+    letter-spacing: 0.02em;
+  }
+  .price-pill:hover { border-color: var(--rose-mid); color: var(--ink); }
+  .price-pill.selected { border-color: var(--rose); background: var(--rose-light); color: var(--rose-dark); font-weight: 500; }
+
+  /* ── Scale ── */
+  .scale-row { margin-bottom: 1.4rem; }
+  .scale-row-label { font-size: 14px; font-weight: 300; color: var(--ink); margin-bottom: 10px; }
+  .scale-dots { display: flex; gap: 7px; align-items: center; }
+  .scale-ends { display: flex; justify-content: space-between; margin-top: 5px; }
+  .scale-end-label { font-size: 10px; font-weight: 300; letter-spacing: 0.06em; color: var(--muted); }
+  .scale-dot {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 0.5px solid var(--border);
+    font-size: 13px;
+    font-weight: 300;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: var(--muted);
+    background: var(--white);
+    transition: all 0.18s;
+    flex-shrink: 0;
+  }
+  .scale-dot:hover { border-color: var(--rose-mid); color: var(--ink); }
+  .scale-dot.selected { border-color: var(--rose); background: var(--rose); color: white; font-weight: 500; }
+
+  /* ── Multi-select radio style ── */
+  .radio-options { display: flex; flex-direction: column; gap: 8px; }
+  .radio-opt {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 16px;
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    background: var(--white);
+    transition: all 0.18s;
+  }
+  .radio-opt:hover { border-color: var(--rose-mid); }
+  .radio-opt.selected { border-color: var(--rose); background: var(--rose-light); }
+  .radio-circle {
+    width: 17px; height: 17px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border-hover);
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.18s;
+  }
+  .radio-opt.selected .radio-circle { background: var(--rose); border-color: var(--rose); }
+  .radio-opt.selected .radio-circle::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: white;
+  }
+  .radio-opt span { font-size: 13.5px; font-weight: 300; color: var(--ink); line-height: 1.4; }
+
+  /* ── Inputs ── */
+  textarea, input[type=text], input[type=email] {
+    width: 100%;
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 16px;
+    font-size: 13.5px;
+    font-family: var(--font-body);
+    font-weight: 300;
+    color: var(--ink);
+    background: var(--white);
+    resize: vertical;
+    transition: border-color 0.2s;
+    outline: none;
+    letter-spacing: 0.02em;
+  }
+  textarea:focus, input:focus { border-color: var(--rose); }
+  textarea::placeholder, input::placeholder { color: var(--muted); }
+  .input-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  @media (max-width: 480px) { .input-row { grid-template-columns: 1fr; } }
+  .input-group label {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 7px;
+    display: block;
+  }
+
+  /* ── Submit ── */
+  .submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--rose);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    margin-top: 0.75rem;
+  }
+  .submit-btn:hover { background: var(--rose-dark); transform: translateY(-1px); }
+  .submit-btn:active { transform: translateY(0); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .giveaway-note {
+    font-size: 11.5px;
+    font-weight: 300;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 0.75rem;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Thank you ── */
+  .thank-you {
+    display: none;
+    text-align: center;
+    padding: 6rem 2rem;
+    max-width: 520px;
+    margin: 0 auto;
+    animation: fadeIn 0.6s ease;
+  }
+  .thank-you.visible { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .ty-eyebrow {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--rose); margin-bottom: 1.25rem;
+  }
+  .ty-title {
+    font-family: var(--font-display);
+    font-size: 44px; font-weight: 300;
+    line-height: 1.2; color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .ty-title em { font-style: italic; color: var(--rose-dark); }
+  .ty-body { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.8; }
+
+  /* ── Error ── */
+  .error-msg {
+    font-size: 12px; color: #c04a6a; margin-top: 0.5rem;
+    font-weight: 300; display: none;
+  }
+  .error-msg.visible { display: block; }
+
+  /* ── Loading spinner ── */
+  .spinner {
+    display: inline-block; width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: white; border-radius: 50%;
+    animation: spin 0.8s linear infinite; margin-right: 8px;
+    vertical-align: middle;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════ HERO ══════════════════════════════════════ -->
+<div class="hero">
+  <div class="brand-mark">Clivia Design Studio</div>
+  <h1 class="hero-title">Help us curate the<br><em>perfect bridesmaid box</em></h1>
+  <p class="hero-sub">We're designing curated gift boxes for the people who matter most. Your answers directly shape what goes inside — takes about 4 minutes.</p>
+  <span class="hero-incentive">Complete the survey for a chance to win a complimentary box</span>
+</div>
+
+<!-- ══════════════════════════════════════ PROGRESS ══════════════════════════════════ -->
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
+  <div class="progress-text" id="prog-text">0% complete</div>
+</div>
+
+<!-- ══════════════════════════════════════ FORM ════════════════════════════════════ -->
+<form class="form-wrap" id="survey-form" onsubmit="handleSubmit(event)">
+
+  <!-- ── Section 1: Items ── -->
+  <div class="section">
+    <div class="section-eyebrow">01 — The box</div>
+    <h2 class="section-q">What would you include in your bridesmaid box?</h2>
+    <p class="section-hint">Pick 3 to 5 items that feel right for your ask.</p>
+
+    <div class="option-group">
+      <div class="option-group-title">Keepsakes &amp; Personal Touches</div>
+      <div class="items-grid" id="items-grid">
+
+        <div class="item-card" data-item="Proposal card (printed keepsake)">
+          <div class="check-badge"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="item-img-wrap">
+            <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=200&q=80" alt="Proposal card">
+          </div>
+          <div><div class="item-name">Proposal card</div><div class="item-sub">Printed keepsake</div></div>
+        </div>
+
+        <div class="item-card" data-item="Personalized jewelry (initial necklace or bracelet)">
+          <div class="check-badge"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="item-img-wrap">
+            <img src="https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=200&q=80" alt="Initial necklace">
+          </div>
+          <div><div class="item-name">Personalized jewelry</div><div class="item-sub">Initial necklace or bracelet</div></div>
+        </div>
+
+        <div class="item-card" data-item="Jewelry box or ring dish">
+          <div class="check-badge"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="item-img-wrap">
+            <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20120%20120%27%3E%0A%20%20%20%20%3Crect%20width%3D%27120%27%20height%3D%27120%27%20rx%3D%2718%27%20fill%3D%27%23f8f2f5%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2760%27%20y%3D%2767%27%20text-anchor%3D%27middle%27%20font-family%3D%27Georgia%2C%20serif%27%20font-size%3D%2718%27%20fill%3D%27%238a5a6e%27%3EJewelry%20Box%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="Jewelry box">
+          </div>
+          <div><div class="item-name">Jewelry box or ring dish</div><div class="item-sub">Keepsake accessory</div></div>
+        </div>
+
+        <div class="item-card" data-item="Compact mirror">
+          <div class="check-badge"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="item-img-wrap">
+            <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20120%20120%27%3E%0A%20%20%20%20%3Crect%20width%3D%27120%27%20height%3D%27120%27%20rx%3D%2718%27%20fill%3D%27%23f8f2f5%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2760%27%20y%3D%2767%27%20text-anchor%3D%27middle%27%20font-family%3D%27Georgia%2C%20serif%27%20font-size%3D%2718%27%20fill%3D%27%238a5a6e%27%3ECompact%20Mirror%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="Compact mirror">
+          </div>
+          <div><div class="item-name">Compact mirror</div><div class="item-sub">Small beauty keepsake</div></div>
+        </div>
+
+        <div class="item-card" data-item="Dried flower bouquet or petals">
+          <div class="check-badge"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="item-img-wrap">
+            <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=200&q=80" alt="Dried flowers">
+          </div>
+          <div><div class="item-name">Dried flower bouquet</div><div class="item-sub">Botanical touch</div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="option-group">
+      <div class="option-group-title">Useful &amp; Little Luxuries</div>
+      <div class="items-grid">
+
+        <div class="item-card" data-item="Satin scrunchie or hair ribbon">
+          <div class="check-badge"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="item-img-wrap">
+            <img src="https://images.unsplash.com/photo-1627533648521-bc6f4b1db8a6?w=200&q=80" alt="Satin scrunchie">
+          </div>
+          <div><div class="item-name">Satin scrunchie / ribbon</div><div class="item-sub">Hair accessory</div></div>
+        </div>
+
+        <div class="item-card" data-item="Skincare or bath item (face mask, bath salts)">
+          <div class="check-badge"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="item-img-wrap">
+            <img src="https://images.unsplash.com/photo-1570194065650-d99fb4ee8a92?w=200&q=80" alt="Skincare bath item">
+          </div>
+          <div><div class="item-name">Skincare / bath item</div><div class="item-sub">Face mask, bath salts</div></div>
+        </div>
+
+        <div class="item-card" data-item="Lip balm or mini perfume">
+          <div class="check-badge"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="item-img-wrap">
+            <img src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200&q=80" alt="Mini perfume">
+          </div>
+          <div><div class="item-name">Lip balm or mini perfume</div><div class="item-sub">Beauty essential</div></div>
+        </div>
+
+        <div class="item-card" data-item="Custom tumbler or mug">
+          <div class="check-badge"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="item-img-wrap">
+            <img src="https://images.unsplash.com/photo-1571090252679-7aec9d0b0afe?w=200&q=80" alt="Custom tumbler">
+          </div>
+          <div><div class="item-name">Custom tumbler / mug</div><div class="item-sub">Personalized drinkware</div></div>
+        </div>
+
+        <div class="item-card" data-item="Silk sleep mask">
+          <div class="check-badge"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="item-img-wrap">
+            <img src="https://images.unsplash.com/photo-1631390793505-8e3f3b083f4e?w=200&q=80" alt="Silk sleep mask">
+          </div>
+          <div><div class="item-name">Silk sleep mask</div><div class="item-sub">Luxury self-care</div></div>
+        </div>
+
+        <div class="item-card" data-item="Cosmetic pouch">
+          <div class="check-badge"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="item-img-wrap">
+            <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20120%20120%27%3E%0A%20%20%20%20%3Crect%20width%3D%27120%27%20height%3D%27120%27%20rx%3D%2718%27%20fill%3D%27%23f8f2f5%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2760%27%20y%3D%2767%27%20text-anchor%3D%27middle%27%20font-family%3D%27Georgia%2C%20serif%27%20font-size%3D%2718%27%20fill%3D%27%238a5a6e%27%3ECosmetic%20Pouch%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="Cosmetic pouch">
+          </div>
+          <div><div class="item-name">Cosmetic pouch</div><div class="item-sub">Travel-ready pouch</div></div>
+        </div>
+
+        <div class="item-card" data-item="Mini snacks or honey jar">
+          <div class="check-badge"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="item-img-wrap">
+            <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20120%20120%27%3E%0A%20%20%20%20%3Crect%20width%3D%27120%27%20height%3D%27120%27%20rx%3D%2718%27%20fill%3D%27%23f8f2f5%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2760%27%20y%3D%2767%27%20text-anchor%3D%27middle%27%20font-family%3D%27Georgia%2C%20serif%27%20font-size%3D%2718%27%20fill%3D%27%238a5a6e%27%3EHoney%20Jar%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="Mini snacks or honey jar">
+          </div>
+          <div><div class="item-name">Mini snacks / honey jar</div><div class="item-sub">Sweet little treat</div></div>
+        </div>
+
+        <div class="item-card" data-item="Scented candle">
+          <div class="check-badge"><svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="item-img-wrap">
+            <img src="https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=200&q=80" alt="Scented candle">
+          </div>
+          <div><div class="item-name">Scented candle</div><div class="item-sub">Mini or full-size</div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="error-msg" id="items-error">Please select at least 3 items to continue.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── Section 2: Budget ── -->
+  <div class="section">
+    <div class="section-eyebrow">02 — Budget</div>
+    <h2 class="section-q">How much would you spend per bridesmaid box?</h2>
+    <p class="section-hint">Think of the total cost per box, including packaging and any personalization.</p>
+    <div class="price-options" id="price-opts">
+      <div class="price-pill" data-price="Under $30">Under $30</div>
+      <div class="price-pill" data-price="$30–$50">$30 – $50</div>
+      <div class="price-pill" data-price="$50–$75">$50 – $75</div>
+      <div class="price-pill" data-price="$75–$100">$75 – $100</div>
+      <div class="price-pill" data-price="$100–$150">$100 – $150</div>
+      <div class="price-pill" data-price="$150+">$150+</div>
+    </div>
+    <div class="error-msg" id="price-error">Please select a budget range.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── Section 3: Scales ── -->
+  <div class="section">
+    <div class="section-eyebrow">03 — What makes it special</div>
+    <h2 class="section-q">Rate how important each quality is to you.</h2>
+    <p class="section-hint">1 = not important at all &nbsp;·&nbsp; 5 = absolutely essential</p>
+
+    <div id="scales">
+      <div class="scale-row" data-attr="Feels luxurious and elevated">
+        <div class="scale-row-label">Feels luxurious and elevated</div>
+        <div class="scale-dots">
+          <div class="scale-dot" data-val="1">1</div><div class="scale-dot" data-val="2">2</div><div class="scale-dot" data-val="3">3</div><div class="scale-dot" data-val="4">4</div><div class="scale-dot" data-val="5">5</div>
+        </div>
+      </div>
+      <div class="scale-row" data-attr="Items feel genuinely useful">
+        <div class="scale-row-label">Items feel genuinely useful</div>
+        <div class="scale-dots">
+          <div class="scale-dot" data-val="1">1</div><div class="scale-dot" data-val="2">2</div><div class="scale-dot" data-val="3">3</div><div class="scale-dot" data-val="4">4</div><div class="scale-dot" data-val="5">5</div>
+        </div>
+      </div>
+      <div class="scale-row" data-attr="Personalized to the recipient">
+        <div class="scale-row-label">Personalized to the recipient</div>
+        <div class="scale-dots">
+          <div class="scale-dot" data-val="1">1</div><div class="scale-dot" data-val="2">2</div><div class="scale-dot" data-val="3">3</div><div class="scale-dot" data-val="4">4</div><div class="scale-dot" data-val="5">5</div>
+        </div>
+      </div>
+      <div class="scale-row" data-attr="Visually beautiful / Instagram-worthy">
+        <div class="scale-row-label">Visually beautiful / Instagram-worthy</div>
+        <div class="scale-dots">
+          <div class="scale-dot" data-val="1">1</div><div class="scale-dot" data-val="2">2</div><div class="scale-dot" data-val="3">3</div><div class="scale-dot" data-val="4">4</div><div class="scale-dot" data-val="5">5</div>
+        </div>
+      </div>
+      <div class="scale-row" data-attr="Matches my wedding color palette">
+        <div class="scale-row-label">Matches my wedding color palette</div>
+        <div class="scale-dots">
+          <div class="scale-dot" data-val="1">1</div><div class="scale-dot" data-val="2">2</div><div class="scale-dot" data-val="3">3</div><div class="scale-dot" data-val="4">4</div><div class="scale-dot" data-val="5">5</div>
+        </div>
+      </div>
+      <div class="scale-row" data-attr="Feels memorable / sentimental">
+        <div class="scale-row-label">Feels memorable / sentimental</div>
+        <div class="scale-dots">
+          <div class="scale-dot" data-val="1">1</div><div class="scale-dot" data-val="2">2</div><div class="scale-dot" data-val="3">3</div><div class="scale-dot" data-val="4">4</div><div class="scale-dot" data-val="5">5</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── Section 4: Personalization ── -->
+  <div class="section">
+    <div class="section-eyebrow">04 — Personalization</div>
+    <h2 class="section-q">What kind of personalization matters most?</h2>
+    <p class="section-hint">Select all that apply.</p>
+
+    <div class="radio-options" id="personal-opts">
+      <div class="radio-opt" data-p="Recipient's name on packaging or a card"><div class="radio-circle"></div><span>Recipient's name on packaging or a card</span></div>
+      <div class="radio-opt" data-p="Color scheme matching my wedding palette"><div class="radio-circle"></div><span>Color scheme matching my wedding palette</span></div>
+      <div class="radio-opt" data-p="Monogrammed or initial-engraved items"><div class="radio-circle"></div><span>Monogrammed or initial-engraved items</span></div>
+      <div class="radio-opt" data-p="A handwritten-style note from me"><div class="radio-circle"></div><span>A handwritten-style note from me</span></div>
+      <div class="radio-opt" data-p="Custom ribbon or wax seal with our initials / wedding date"><div class="radio-circle"></div><span>Custom ribbon or wax seal with our initials / wedding date</span></div>
+      <div class="radio-opt" data-p="A photo of us included"><div class="radio-circle"></div><span>A photo of us included</span></div>
+    </div>
+
+    <div style="margin-top: 1.25rem;">
+      <p class="section-hint">Anything else you'd love to customize? <span style="opacity:0.6">(optional)</span></p>
+      <textarea id="custom-note" rows="3" placeholder="e.g. I'd love the box to feel like a spa day, or match our dusty rose palette…"></textarea>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── Section 5: About + Giveaway ── -->
+  <div class="section">
+    <div class="section-eyebrow">05 — About you</div>
+    <h2 class="section-q">When is your wedding?</h2>
+    <div class="radio-options" id="date-opts" style="margin-bottom: 1.75rem;">
+      <div class="radio-opt" data-d="Within the next 3 months"><div class="radio-circle"></div><span>Within the next 3 months</span></div>
+      <div class="radio-opt" data-d="3–6 months away"><div class="radio-circle"></div><span>3–6 months away</span></div>
+      <div class="radio-opt" data-d="6–12 months away"><div class="radio-circle"></div><span>6–12 months away</span></div>
+      <div class="radio-opt" data-d="Over a year away"><div class="radio-circle"></div><span>Over a year away</span></div>
+      <div class="radio-opt" data-d="Just browsing / not engaged yet"><div class="radio-circle"></div><span>Just browsing / not engaged yet</span></div>
+    </div>
+    <div class="error-msg" id="date-error">Please select a wedding timeline.</div>
+
+    <h2 class="section-q" style="margin-bottom: 0.4rem;">Enter the giveaway</h2>
+    <p class="section-hint">Optional — contact info used only for the giveaway and early access offers. We will never share your details.</p>
+    <div class="input-row" style="margin-bottom: 10px;">
+      <div class="input-group"><label>First name</label><input type="text" id="fname" placeholder="Your first name"></div>
+      <div class="input-group"><label>Email address</label><input type="email" id="femail" placeholder="you@email.com"></div>
+    </div>
+    <div class="input-group"><label>Instagram handle <span style="font-weight:300;opacity:0.6">(optional)</span></label><input type="text" id="finsta" placeholder="@yourhandle"></div>
+  </div>
+
+  <button class="submit-btn" type="submit" id="submit-btn">Submit my responses</button>
+  <p class="giveaway-note">One winner drawn monthly and contacted via email. No purchase necessary to enter or win.</p>
+
+</form>
+
+<!-- ══════════════════════════════════════ THANK YOU ══════════════════════════════════ -->
+<div class="thank-you" id="thank-you">
+  <div class="ty-eyebrow">Thank you</div>
+  <h2 class="ty-title">Your answers are<br><em>shaping something beautiful.</em></h2>
+  <p class="ty-body">We'll reach out if you're selected for the giveaway — and let you know when Clivia boxes are available to order.</p>
+  <div class="divider" style="margin: 2rem auto;"></div>
+  <div style="font-size: 10px; font-weight: 300; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted);">Clivia Design Studio</div>
+</div>
+
+<script>
+  // ═══════════════════════════════════════════════════════
+  // CONFIGURATION
+  // Replace this URL with your Google Apps Script web app URL
+  // See setup instructions below
+  // ═══════════════════════════════════════════════════════
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxtZ4QLHFEJtOG-3hxvPJnMWkHr-PMqGhbD3JsQ9McEOdqjxhrtKGQV4KDa36m886Y/exec';
+
+  // ── State ──
+  const selectedItems = new Set();
+  const selectedPersonal = new Set();
+  const scaleValues = {};
+  let selectedPrice = null;
+  let selectedDate = null;
+
+  // ── Item selection ──
+  document.querySelectorAll('.item-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const item = card.dataset.item;
+      if (selectedItems.has(item)) {
+        selectedItems.delete(item);
+        card.classList.remove('selected');
+      } else if (selectedItems.size < 5) {
+        selectedItems.add(item);
+        card.classList.add('selected');
+      }
+      updateProgress();
+    });
+  });
+
+  // ── Price pills ──
+  document.querySelectorAll('.price-pill').forEach(p => {
+    p.addEventListener('click', () => {
+      document.querySelectorAll('.price-pill').forEach(x => x.classList.remove('selected'));
+      p.classList.add('selected');
+      selectedPrice = p.dataset.price;
+      updateProgress();
+    });
+  });
+
+  // ── Scales ──
+  document.querySelectorAll('.scale-row').forEach(row => {
+    row.querySelectorAll('.scale-dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        row.querySelectorAll('.scale-dot').forEach(d => d.classList.remove('selected'));
+        dot.classList.add('selected');
+        scaleValues[row.dataset.attr] = dot.dataset.val;
+        updateProgress();
+      });
+    });
+  });
+
+  // ── Personalization ──
+  document.querySelectorAll('#personal-opts .radio-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const p = opt.dataset.p;
+      if (selectedPersonal.has(p)) { selectedPersonal.delete(p); opt.classList.remove('selected'); }
+      else { selectedPersonal.add(p); opt.classList.add('selected'); }
+      updateProgress();
+    });
+  });
+
+  // ── Wedding date ──
+  document.querySelectorAll('#date-opts .radio-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('#date-opts .radio-opt').forEach(x => x.classList.remove('selected'));
+      opt.classList.add('selected');
+      selectedDate = opt.dataset.d;
+      updateProgress();
+    });
+  });
+
+  // ── Progress ──
+  function updateProgress() {
+    const steps = [
+      selectedItems.size >= 3 ? 1 : 0,
+      selectedPrice ? 1 : 0,
+      Object.keys(scaleValues).length >= 3 ? 1 : 0,
+      selectedPersonal.size >= 1 ? 1 : 0,
+      selectedDate ? 1 : 0,
+    ];
+    const pct = Math.round((steps.reduce((a,b) => a+b,0) / 5) * 100);
+    document.getElementById('prog').style.width = pct + '%';
+    document.getElementById('prog-text').textContent = pct + '% complete';
+  }
+
+  // ── Validation ──
+  function validate() {
+    let ok = true;
+    document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('visible'));
+    if (selectedItems.size < 3) {
+      document.getElementById('items-error').classList.add('visible');
+      ok = false;
+    }
+    if (!selectedPrice) {
+      document.getElementById('price-error').classList.add('visible');
+      ok = false;
+    }
+    if (!selectedDate) {
+      document.getElementById('date-error').classList.add('visible');
+      ok = false;
+    }
+    return ok;
+  }
+
+  // ── Submit ──
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!validate()) {
+      document.querySelector('.error-msg.visible')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Sending…';
+
+    const payload = {
+      timestamp: new Date().toISOString(),
+      items_selected: [...selectedItems].join(', '),
+      items_count: selectedItems.size,
+      budget: selectedPrice || '',
+      scale_luxurious: scaleValues['Feels luxurious and elevated'] || '',
+      scale_useful: scaleValues['Items feel genuinely useful'] || '',
+      scale_personalized: scaleValues['Personalized to the recipient'] || '',
+      scale_beautiful: scaleValues['Visually beautiful / Instagram-worthy'] || '',
+      scale_palette: scaleValues['Matches my wedding color palette'] || '',
+      scale_sentimental: scaleValues['Feels memorable / sentimental'] || '',
+      personalization_choices: [...selectedPersonal].join(', '),
+      personalization_notes: document.getElementById('custom-note').value.trim(),
+      wedding_timeline: selectedDate || '',
+      first_name: document.getElementById('fname').value.trim(),
+      email: document.getElementById('femail').value.trim(),
+      instagram: document.getElementById('finsta').value.trim(),
+    };
+
+    try {
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+    } catch (err) {
+      console.warn('Submission note:', err);
+    }
+
+    document.getElementById('survey-form').style.display = 'none';
+    document.querySelector('.hero').style.display = 'none';
+    document.querySelector('.progress-wrap').style.display = 'none';
+    document.getElementById('thank-you').classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+<!--
+════════════════════════════════════════════════════════════════
+  GOOGLE SHEETS BACKEND — SETUP INSTRUCTIONS
+════════════════════════════════════════════════════════════════
+
+STEP 1 — Create a Google Sheet
+  1. Go to sheets.google.com and create a new spreadsheet
+  2. Name it "Clivia Survey Responses"
+  3. In Row 1 add these headers (one per column):
+     Timestamp | Items Selected | Items Count | Budget |
+     Scale: Luxurious | Scale: Useful | Scale: Personalized |
+     Scale: Beautiful | Scale: Palette Match | Scale: Sentimental |
+     Personalization Choices | Personalization Notes |
+     Wedding Timeline | First Name | Email | Instagram
+
+STEP 2 — Create the Apps Script
+  1. In your Sheet, go to Extensions → Apps Script
+  2. Delete any existing code and paste this:
+
+  ─────────────────────────────────────────────
+  function doPost(e) {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    const data = JSON.parse(e.postData.contents);
+    sheet.appendRow([
+      data.timestamp,
+      data.items_selected,
+      data.items_count,
+      data.budget,
+      data.scale_luxurious,
+      data.scale_useful,
+      data.scale_personalized,
+      data.scale_beautiful,
+      data.scale_palette,
+      data.scale_sentimental,
+      data.personalization_choices,
+      data.personalization_notes,
+      data.wedding_timeline,
+      data.first_name,
+      data.email,
+      data.instagram,
+    ]);
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'ok' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  ─────────────────────────────────────────────
+
+  3. Save the script (Ctrl/Cmd+S)
+
+STEP 3 — Deploy as Web App
+  1. Click "Deploy" → "New deployment"
+  2. Click the gear icon next to "Select type" → choose "Web app"
+  3. Set:
+       Description: Clivia Survey v1
+       Execute as: Me
+       Who has access: Anyone
+  4. Click "Deploy"
+  5. Authorize the permissions when prompted
+  6. Copy the Web App URL
+
+STEP 4 — Add the URL to this file
+  1. Find this line near the top of the <script> section:
+       const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxtZ4QLHFEJtOG-3hxvPJnMWkHr-PMqGhbD3JsQ9McEOdqjxhrtKGQV4KDa36m886Y/exec';
+  2. Replace 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' with your copied URL
+
+STEP 5 — Host the HTML file
+  Options:
+  · GitHub Pages (free): push this file as index.html to a repo,
+    enable Pages in Settings
+  · Netlify Drop (free): drag the file to netlify.com/drop
+  · Any static web host
+
+════════════════════════════════════════════════════════════════
+-->
+
+</body>
+</html>
