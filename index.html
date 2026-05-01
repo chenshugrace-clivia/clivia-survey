@@ -70,6 +70,8 @@
   .hero-marquee {
     position: relative;
     overflow: hidden;
+    width: calc(var(--max) - 4rem);
+    max-width: none;
     border-top: 0.5px solid var(--border);
     border-bottom: 0.5px solid var(--border);
     background: rgba(245, 238, 242, 0.6);
@@ -100,6 +102,12 @@
     padding: 3.5rem 2rem 4.5rem;
     position: relative;
   }
+  .hero-main {
+    display: grid;
+    grid-template-columns: minmax(0, 620px) minmax(280px, 360px);
+    gap: 2.2rem;
+    align-items: end;
+  }
   .hero::before {
     content: '';
     position: absolute;
@@ -115,7 +123,15 @@
   .hero-copy {
     position: relative;
     z-index: 1;
-    max-width: 620px;
+    max-width: none;
+  }
+  .hero-side {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 360px;
+    justify-self: end;
+    align-self: end;
   }
   .eyebrow {
     font-size: 10px;
@@ -182,8 +198,8 @@
 
   .hero-mini-links {
     width: 100%;
-    max-width: 520px;
-    margin-top: 0.6rem;
+    max-width: 100%;
+    margin-top: 0;
   }
   .visual-grid {
     display: grid;
@@ -224,7 +240,19 @@
     font-size: 11px;
     color: var(--muted);
   }
+  @media (max-width: 900px) {
+    .hero-main {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    .hero-side {
+      max-width: 520px;
+      justify-self: start;
+      align-self: start;
+    }
+  }
   @media (max-width: 640px) {
+    .hero-marquee { width: 100%; }
     .visual-grid { grid-template-columns: 1fr; }
     .hero-mini-links { max-width: 100%; }
   }
@@ -506,14 +534,13 @@
     <div class="brand-mark">Clivia Design Studio</div>
     <div class="nav-links">
       <a href="products.html#sets">Products</a>
-      <a href="#new-arrivals">New Arrivals</a>
+      <a href="build-your-own.html">Build Your Own</a>
       <a href="#about">About</a>
-      <a href="survey.html">Survey</a>
+      <a href="survey.html">Inquiry</a>
     </div>
   </nav>
 
   <section class="hero">
-    <div class="hero-copy">
       <div class="hero-marquee" aria-label="Featured message">
         <div class="hero-marquee-track">
           <span class="hero-marquee-item">Designed for gifting</span>
@@ -524,16 +551,20 @@
           <span class="hero-marquee-item">from $42</span>
         </div>
       </div>
-      <div class="eyebrow">Curated Gift Boxes</div>
-      <h1 class="hero-title">Thoughtful gift boxes,<br><em>wrapped with quiet romance.</em></h1>
-      <p class="hero-sub">Clivia creates elegant gift boxes designed for meaningful moments — from bridesmaid proposals to sweet, feminine keepsakes. Each box is curated to feel polished, personal, and ready to gift.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="products.html#sets">Shop Products</a>
-        <a class="btn btn-secondary" href="products.html#single-items">See New Arrivals</a>
-      </div>
-      <div class="hero-mini-links">
-        <div class="visual-grid">
-          <a class="mini-tile-link" href="products.html#sets"><div class="mini-tile">
+      <div class="hero-main">
+        <div class="hero-copy">
+          <div class="eyebrow">Curated Gift Boxes</div>
+          <h1 class="hero-title">Thoughtful gift boxes,<br><em>wrapped with quiet romance.</em></h1>
+          <p class="hero-sub">Clivia creates elegant gift boxes designed for meaningful moments — from bridesmaid proposals to sweet, feminine keepsakes. Each box is curated to feel polished, personal, and ready to gift.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="products.html#sets">Shop Products</a>
+            <a class="btn btn-secondary" href="build-your-own.html">Build Your Own</a>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="hero-mini-links">
+            <div class="visual-grid">
+              <a class="mini-tile-link" href="products.html#sets"><div class="mini-tile">
             <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20120%20120%27%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%27bg%27%20x1%3D%270%27%20x2%3D%270%27%20y1%3D%270%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%270%25%27%20stop-color%3D%27%23fffafc%27/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%27100%25%27%20stop-color%3D%27%23f4eaef%27/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%27120%27%20height%3D%27120%27%20rx%3D%2722%27%20fill%3D%27url%28%23bg%29%27/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2792%27%20cy%3D%2725%27%20r%3D%2714%27%20fill%3D%27%23f7eef2%27/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2725%27%20cy%3D%2796%27%20r%3D%2716%27%20fill%3D%27%23faf2f5%27/%3E%0A%20%20%20%20%3Cellipse%20cx%3D%2760%27%20cy%3D%2795%27%20rx%3D%2725%27%20ry%3D%275%27%20fill%3D%27%23ead9e1%27/%3E%0A%20%20%20%20%0A%3Crect%20x%3D%2728%27%20y%3D%2742%27%20width%3D%2764%27%20height%3D%2738%27%20rx%3D%278%27%20fill%3D%27%23fffdfd%27%20stroke%3D%27%238a5a6e%27%20stroke-width%3D%272.2%27/%3E%0A%3Cpath%20d%3D%27M28%2052%20H92%27%20stroke%3D%27%23d4b0c0%27%20stroke-width%3D%272.2%27/%3E%0A%3Cpath%20d%3D%27M60%2042%20V80%27%20stroke%3D%27%238a5a6e%27%20stroke-width%3D%272%27/%3E%0A%3Cpath%20d%3D%27M50%2041%20Q60%2052%2070%2041%27%20fill%3D%27none%27%20stroke%3D%27%23b08898%27%20stroke-width%3D%272.2%27/%3E%0A%3Cpath%20d%3D%27M60%2031%20C64%2038%2069%2042%2060%2048%20C51%2042%2056%2038%2060%2031%20Z%27%20fill%3D%27%23ead7df%27%20stroke%3D%27%238a5a6e%27%20stroke-width%3D%271.8%27/%3E%0A%0A%20%20%20%20%3C/svg%3E" alt="Signature box illustration">
             <div class="mini-tile-title">Signature Boxes</div>
             <div class="mini-tile-sub">Curated &amp; gift-ready</div>
@@ -543,9 +574,9 @@
             <div class="mini-tile-title">Lovely Add-Ons</div>
             <div class="mini-tile-sub">Small pieces with charm</div>
           </div></a>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
   </section>
 
 
@@ -718,10 +749,10 @@
     <div class="cta-box">
       <div class="eyebrow">Let’s make gifting feel beautiful</div>
       <h2 class="cta-title">Ready to browse, customize,<br><em>or ask about a box?</em></h2>
-      <p class="cta-copy">Use this homepage as your main landing page, then link each product card to its own product page or Etsy listing later. You can also connect the survey page as a secondary call to action for market research and early access.</p>
+      <p class="cta-copy">Browse the ready-to-order collection, explore a custom Build Your Own flow, or send an inquiry if you would like help choosing the right box. Standard products can lead to Etsy checkout, while custom builds can be reviewed before payment.</p>
       <div class="hero-actions" style="justify-content:center;">
-        <a class="btn btn-primary" href="products.html">Browse Collection</a>
-        <a class="btn btn-secondary" href="survey.html">Take the Survey</a>
+        <a class="btn btn-primary" href="build-your-own.html">Build Your Own</a>
+        <a class="btn btn-secondary" href="survey.html">Start an Inquiry</a>
       </div>
     </div>
   </section>

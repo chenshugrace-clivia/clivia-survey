@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clivia Design Studio — Survey</title>
+<title>Clivia Design Studio — Custom Order Inquiry</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -138,15 +138,16 @@
   <div class="nav-links">
     <a href="index.html">Home</a>
     <a href="products.html">Products</a>
-    <a href="#survey-form">Survey</a>
+    <a href="build-your-own.html">Build Your Own</a>
+    <a href="#survey-form">Inquiry</a>
   </div>
 </nav>
 
 <div class="hero">
   <div class="brand-mark" style="margin-bottom:1.3rem;">Clivia Design Studio</div>
-  <h1 class="hero-title">Help us curate the<br><em>perfect gift collection</em></h1>
-  <p class="hero-sub">Your responses help shape our future gift boxes and product details — from keepsakes and practical add-ons to personalization and price range.</p>
-  <span class="hero-incentive">Complete the survey for a chance to win a complimentary box</span>
+  <h1 class="hero-title">Custom order<br><em>inquiry</em></h1>
+  <p class="hero-sub">Tell us about the gift box you have in mind. We use this page to review custom requests, personalization ideas, timing, and contact details before following up with pricing and an Etsy checkout link.</p>
+  <span class="hero-incentive">We review each request personally and follow up by email.</span>
 </div>
 
 <form class="form-wrap" id="survey-form" onsubmit="handleSubmit(event)">
@@ -315,8 +316,8 @@
   <div class="divider"></div>
 
   <div class="section">
-    <div class="section-eyebrow">05 — About you</div>
-    <h2 class="section-q">When is your wedding?</h2>
+    <div class="section-eyebrow">05 — Inquiry details</div>
+    <h2 class="section-q">When do you need your gift box?</h2>
     <div class="radio-options" id="date-opts" style="margin-bottom:1.75rem;">
       <div class="radio-opt" data-d="Within the next 3 months"><div class="radio-circle"></div><span>Within the next 3 months</span></div>
       <div class="radio-opt" data-d="3–6 months away"><div class="radio-circle"></div><span>3–6 months away</span></div>
@@ -326,8 +327,8 @@
     </div>
     <div class="error-msg" id="date-error">Please select a wedding timeline.</div>
 
-    <h2 class="section-q" style="margin-bottom:0.4rem;">Enter the giveaway</h2>
-    <p class="section-hint">Optional — contact info used only for the giveaway and early access offers. We will never share your details.</p>
+    <h2 class="section-q" style="margin-bottom:0.4rem;">How can we reach you?</h2>
+    <p class="section-hint">Please leave the best contact details for your inquiry. We use this information only to follow up about your request.</p>
     <div class="input-row" style="margin-bottom:10px;">
       <div class="input-group"><label>First name</label><input type="text" id="fname" placeholder="Your first name"></div>
       <div class="input-group"><label>Email address</label><input type="email" id="femail" placeholder="you@email.com"></div>
@@ -335,14 +336,14 @@
     <div class="input-group"><label>Instagram handle <span style="font-weight:300;opacity:0.6">(optional)</span></label><input type="text" id="finsta" placeholder="@yourhandle"></div>
   </div>
 
-  <button class="submit-btn" type="submit" id="submit-btn">Submit my responses</button>
-  <p class="giveaway-note">One winner drawn monthly and contacted via email. No purchase necessary to enter or win.</p>
+  <button class="submit-btn" type="submit" id="submit-btn">Submit Inquiry</button>
+  <p class="giveaway-note">We will review your inquiry and follow up with pricing, availability, and an Etsy checkout link if your box is a fit.</p>
 </form>
 
 <div class="thank-you" id="thank-you">
   <div class="ty-eyebrow">Thank you</div>
   <h2 class="ty-title">Your answers are<br><em>shaping something beautiful.</em></h2>
-  <p class="ty-body">We'll reach out if you're selected for the giveaway — and let you know when Clivia boxes are available to order.</p>
+  <p class="ty-body">We’ve received your inquiry. We’ll follow up with details, pricing, and an Etsy checkout link once we review your request.</p>
   <div class="divider" style="margin: 2rem auto;"></div>
   <div style="font-size:10px; font-weight:300; letter-spacing:0.22em; text-transform:uppercase; color:var(--muted);">Clivia Design Studio</div>
 </div>
@@ -354,6 +355,25 @@
   const scaleValues = {};
   let selectedPrice = null;
   let selectedDate = null;
+
+
+  function applyInquiryPrefill() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('source') !== 'build') return;
+    const tone = params.get('tone') || '';
+    const items = params.get('items') || '';
+    const personalized = params.get('personalized') || '';
+    const name = params.get('name') || '';
+    const notes = [];
+    notes.push('Build Your Own inquiry');
+    if (tone) notes.push('Tone: ' + tone);
+    if (items) notes.push('Items: ' + items);
+    if (personalized) notes.push('Personalized: ' + personalized + (name ? ' (' + name + ')' : ''));
+    const noteField = document.getElementById('custom-note');
+    if (noteField && !noteField.value.trim()) {
+      noteField.value = notes.join(' | ');
+    }
+  }
 
   document.querySelectorAll('.item-card').forEach(card => {
     card.addEventListener('click', () => {
@@ -406,6 +426,8 @@
       selectedDate = opt.dataset.d;
     });
   });
+
+  applyInquiryPrefill();
 
   function validate() {
     let ok = true;
